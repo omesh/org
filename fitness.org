@@ -1,0 +1,41 @@
+#+CATEGORY: Fitness
+#+STARTUP: showall
+
+* Fitness
+
+#+tblname: exercises
+|      Date | PushUps | PullUps | Squats |
+|-----------+---------+---------+--------|
+| 2015-1-02 |      60 |      20 |     00 |
+| 2015-1-06 |      75 |      20 |    165 |
+| 2015-1-08 |      80 |      10 |     80 |
+|           |     215 |      50 |    245 |
+|         ^ |       x |       y |      z |
+#+TBLFM: $x=vsum(@2..@-1)
+#+TBLFM: $y=vsum(@2..@-1)
+#+TBLFM: $z=vsum(@2..@-1)
+
+#+begin_src R :results output graphics :file ~/pushups.png :var exercises=exercises :width 400 :height 300 :post (org-redisplay-inline-images)
+library(ggplot2)
+p <- ggplot(exercises[-nrow(exercises),], aes(y = as.integer(PushUps), x = as.Date(Date), fill=PushUps))
+p <- p + geom_bar(stat="identity") + xlab("Time") + ylab("PushUps")
+p
+#+end_src
+
+#+begin_src R :results output graphics :file ~/pullups.png :var exercises=exercises :width 400 :height 300 :post (org-redisplay-inline-images)
+library(ggplot2)
+p <- ggplot(exercises[-nrow(exercises),], aes(y = as.integer(PullUps), x = as.Date(Date), fill=PullUps))
+p <- p + geom_bar(stat="identity") + xlab("Time") + ylab("PullUps")
+p
+#+end_src
+
+#+begin_src R :results output graphics :file ~/squats.png :var exercises=exercises :width 400 :height 300 :post (org-redisplay-inline-images)
+library(ggplot2)
+p <- ggplot(exercises[-nrow(exercises),], aes(y = as.integer(Squats), x = as.Date(Date), fill=Squats))
+p <- p + geom_bar(stat="identity") + xlab("Time") + ylab("Squats")
+p
+#+end_src
+
+
+#+Results:
+[[file:~/pushups.png]] [[file:~/pullups.png]] [[file:~/squats.png]]
